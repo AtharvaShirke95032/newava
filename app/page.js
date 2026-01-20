@@ -1,4 +1,4 @@
-import FuzzyText from "@/components/FuzzyText";
+
 import Navbar from "@/components/navbar";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ export default function Home() {
             playsInline
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/back.mp4" type="video/mp4" />
+            <source src="/back2.mp4" type="video/mp4" />
           </video>
           {/* Optional overlay for better text readability */}
           {/* <div className="absolute inset-0 bg-black/30 z-10" /> */}
@@ -76,10 +76,10 @@ export default function Home() {
           <span className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-yellow-400" />
 
           <h2 
-            className="text-center text-yellow-400 font-extrabold uppercase tracking-widest text-7xl mb-8"
+            className="text-center text-yellow-400 font-extrabold uppercase text-7xl mb-8"
             style={{ fontFamily: '"VT323", monospace' }}
           >
-            What is Avalon?
+            What is Avalon
           </h2>
 
           <p className="max-w-[760px] mx-auto text-md leading-8 text-center text-gray-200">
@@ -89,6 +89,7 @@ export default function Home() {
         </div>
 
       </section>
+     
 
 
 
