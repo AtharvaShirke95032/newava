@@ -10,7 +10,7 @@ const EVENTS = [
   {
     id: "innov8",
     title: "INNOV8 4.0",
-    image: "/innov8.png",
+    image: "/first.png",
     date: "24-Hour Hackathon",
     prize: "₹60,000",
     content: (
@@ -30,7 +30,7 @@ const EVENTS = [
   {
     id: "robosoccer",
     title: "ROBO SOCCER",
-    image: "/robosoccer.png",
+    image: "/second.png",
     date: "9 FEB 2026",
     prize: "₹16,000",
     content: (
@@ -50,7 +50,7 @@ const EVENTS = [
   {
     id: "reversecoding",
     title: "REVERSE CODING",
-    image: "/reversecoding.png",
+    image: "/third.png",
     date: "9 FEB 2026",
     prize: "₹8,000",
     content: (
@@ -70,7 +70,7 @@ const EVENTS = [
   {
     id: "roborace",
     title: "ROBO RACE",
-    image: "/roborace.png",
+    image: "/brum.png",
     date: "9 FEB 2026",
     prize: "₹16,000",
     content: (
@@ -82,7 +82,7 @@ const EVENTS = [
           A thrilling robotics competition testing speed, precision, and control on a challenging track.
         </p>
         <p className="mt-3 text-sm sm:text-base text-gray-400">
-          Registration: ₹150 per individual
+          Registration: ₹400 per team (2-4 members)
         </p>
       </>
     ),
@@ -90,7 +90,7 @@ const EVENTS = [
   {
     id: "cadcomp",
     title: "CAD COMP",
-    image: "/cadcomp.png",
+    image: "/five.png",
     date: "10 FEB 2026",
     prize: "₹4,000",
     content: (
@@ -110,7 +110,7 @@ const EVENTS = [
   {
     id: "paperweight",
     title: "PAPERWEIGHT",
-    image: "/paperweight.png",
+    image: "/six.png",
     date: "10 FEB 2026",
     prize: "₹4,000",
     content: (
@@ -142,7 +142,6 @@ export default function MissionBriefing() {
   return (
     <section className="w-full bg-black py-20 text-white">
       <div className="max-w-[1400px] mx-auto px-6">
-        
         {/* --- MOBILE NAVIGATION --- */}
         <div className="flex flex-col lg:hidden mb-8 space-y-4">
           <div className="flex flex-wrap gap-4 border-b border-white/10 pb-4">
@@ -192,7 +191,6 @@ export default function MissionBriefing() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-12">
-
           {/* LEFT PANEL (Desktop) */}
           <div className="hidden lg:flex flex-col">
             <h2 className="text-[72px] font-extrabold leading-tight uppercase tracking-widest">
@@ -235,7 +233,6 @@ export default function MissionBriefing() {
           {/* RIGHT PANEL */}
           <div className="relative min-h-[600px] md:min-h-[740px] lg:min-h-[860px]">
             <AnimatePresence mode="wait">
-
               {/* OBJECTIVE */}
               {currentView === "objective" && (
                 <motion.div
@@ -300,15 +297,36 @@ export default function MissionBriefing() {
                 >
                   {/* MAIN IMAGE */}
                   <div className="relative w-full h-[520px] border border-white/10 overflow-hidden bg-zinc-900">
-                    <button
-                      onClick={() => {
-                        setSelectedEvent(event.title);
-                        setIsModalOpen(true);
-                      }}
-                      className="absolute z-20 bottom-6 right-6 bg-yellow-400 text-black px-6 py-3 font-bold uppercase tracking-widest hover:bg-yellow-300 transition shadow-[0_0_20px_rgba(250,204,21,0.4)]"
-                    >
-                      Register
-                    </button>
+                  <div className="absolute top-6 left-6 z-30">
+                      <div className="bg-black/70 backdrop-blur px-4 py-2 border-l-4 border-yellow-400">
+                        <p className="text-xs uppercase tracking-widest text-gray-400">
+                          Event
+                        </p>
+                        <h3 className="text-lg sm:text-xl font-bold text-yellow-400 uppercase tracking-wide">
+                          {event.title}
+                        </h3>
+                      </div>
+                    </div>
+                    {event.id === "innov8" ? (
+                      <a
+                        href="https://innov-77.devfolio.co/overview"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute inset-0 z-20 flex items-center justify-center bg-yellow-400/20 text-black font-bold uppercase tracking-widest hover:bg-yellow-300 transition"
+                      >
+                        Visit INNOV8 4.0
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setSelectedEvent(event.title);
+                          setIsModalOpen(true);
+                        }}
+                        className="absolute z-20 bottom-6 right-6 bg-yellow-400 text-black px-6 py-3 font-bold uppercase tracking-widest hover:bg-yellow-300 transition shadow-[0_0_20px_rgba(250,204,21,0.4)]"
+                      >
+                        Register 
+                      </button>
+                    )}
 
                     <AnimatePresence mode="wait">
                       <motion.div
@@ -345,7 +363,10 @@ export default function MissionBriefing() {
                       >
                         <Image src={e.image} alt={e.title} fill className="object-cover" />
                         {activeEventIndex !== index && (
-                          <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
+                          <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" >
+                            
+                            </div>
+                          
                         )}
                       </button>
                     ))}

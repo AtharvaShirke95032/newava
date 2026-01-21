@@ -9,20 +9,19 @@ import { useEffect, useState } from "react";
 import AvalonNewsletter from "@/components/Newsletter";
 
 export default function Home() {
+  // Scroll to top on page load
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Animation variants
   const fadeUpVariant = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const fadeInVariant = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { duration: 1 } },
-  };
-
-  // Intersection hooks
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
   const animation = useAnimation();
 
@@ -30,15 +29,28 @@ export default function Home() {
     if (inView) animation.start("visible");
   }, [inView, animation]);
 
+  // Scroll to section handler
+  const scrollTo = (id) => {
+    if (id === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 80; // offset for fixed navbar
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="relative w-full overflow-x-hidden bg-black">
-
       {/* NAVBAR */}
-      {/* <Navbar /> */}
+      <Navbar
+        onOpenRegister={() => setIsModalOpen(true)}
+        onNavigate={scrollTo}
+      />
 
       {/* ================= HERO SECTION ================= */}
       <section className="relative w-full h-[100dvh] flex items-center justify-center overflow-hidden">
-
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full">
           <video
@@ -53,36 +65,28 @@ export default function Home() {
 
           {/* Overlays */}
           <div className="absolute inset-0 bg-black/20" />
-          <div className="absolute left-0 right-0 w-full h-[440px] z-20 bg-repeat-x pointer-events-none"
+          <div
+            className="absolute left-0 right-0 w-full h-[440px] z-20 bg-repeat-x pointer-events-none"
             style={{
-              bottom: '-150px', backgroundImage: "url('/noise.png'), url('/noisepat.png')",
-              backgroundPosition: "top, top 440px center", backgroundSize: "auto, auto"
-            }} />
+              bottom: "-150px",
+              backgroundImage: "url('/noise.png'), url('/noisepat.png')",
+              backgroundPosition: "top, top 440px center",
+              backgroundSize: "auto, auto",
+            }}
+          />
         </div>
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 gap-5 sm:gap-6 pt-24 sm:pt-32">
-
           {/* Logo */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUpVariant}
-          >
+          <motion.div initial="hidden" animate="visible" variants={fadeUpVariant}>
             <Image
               src="/text2.png"
               alt="Avalon Logo"
               width={677}
               height={369}
               priority
-              className="
-                w-[220px]
-                xs:w-[260px]
-                sm:w-[360px]
-                md:w-[480px]
-                lg:w-[677px]
-                h-auto
-              "
+              className="w-[220px] xs:w-[260px] sm:w-[360px] md:w-[480px] lg:w-[677px] h-auto"
             />
           </motion.div>
 
@@ -105,31 +109,13 @@ export default function Home() {
             transition={{ delay: 0.5 }}
             className="mt-4 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center"
           >
-
             {/* View Missions */}
             <a
               onClick={(e) => {
                 e.preventDefault();
-                const el = document.getElementById("missions");
-                if (!el) return;
-
-                const y = el.getBoundingClientRect().top + window.pageYOffset + 40;
-                window.scrollTo({ top: y, behavior: "smooth" });
+                scrollTo("missions");
               }}
-              className="
-                cyber-btn
-                relative
-                cursor-pointer
-                w-[220px] sm:w-[252px]
-                h-[44px] sm:h-[48px]
-                flex-shrink-0
-                overflow-hidden
-                transition-all duration-300 ease-out
-                hover:scale-[1.04]
-                hover:-translate-y-[2px]
-                hover:drop-shadow-[0_0_12px_rgba(255,214,0,0.45)]
-                active:scale-[0.98]
-              "
+              className="cyber-btn relative cursor-pointer w-[220px] sm:w-[252px] h-[44px] sm:h-[48px] flex-shrink-0 overflow-hidden transition-all duration-300 ease-out hover:scale-[1.04] hover:-translate-y-[2px] hover:drop-shadow-[0_0_12px_rgba(255,214,0,0.45)] active:scale-[0.98]"
             >
               <Image src="/btn.svg" alt="button" fill className="object-contain" />
               <span className="absolute inset-0 flex items-center justify-center font-bold uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap pointer-events-none">
@@ -139,20 +125,7 @@ export default function Home() {
 
             {/* Register */}
             <a
-              className="
-                cyber-btn
-                relative
-                cursor-pointer
-                w-[220px] sm:w-[252px]
-                h-[44px] sm:h-[48px]
-                flex-shrink-0
-                overflow-hidden
-                transition-all duration-300 ease-out
-                hover:scale-[1.04]
-                hover:-translate-y-[2px]
-                hover:drop-shadow-[0_0_12px_rgba(255,214,0,0.45)]
-                active:scale-[0.98]
-              "
+              className="cyber-btn relative cursor-pointer w-[220px] sm:w-[252px] h-[44px] sm:h-[48px] flex-shrink-0 overflow-hidden transition-all duration-300 ease-out hover:scale-[1.04] hover:-translate-y-[2px] hover:drop-shadow-[0_0_12px_rgba(255,214,0,0.45)] active:scale-[0.98]"
               onClick={(e) => {
                 e.preventDefault();
                 setIsModalOpen(true);
@@ -175,8 +148,6 @@ export default function Home() {
           animate={animation}
           variants={fadeUpVariant}
         >
-
-          {/* Border corners */}
           <span className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-yellow-400" />
           <span className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-yellow-400" />
           <span className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-yellow-400" />
@@ -212,59 +183,35 @@ export default function Home() {
       </section>
 
       <section className="relative w-full overflow-hidden">
+        {/* TOP DECORATION */}
+        <div className="absolute top-0 left-0 w-full z-10 pointer-events-none">
+          <Image
+            src="/upp.svg"
+            alt="top decoration"
+            width={1920}
+            height={300}
+            className="w-full h-auto max-h-[300px]"
+            priority
+          />
+        </div>
 
-  {/* TOP DECORATION */}
-  <div className="absolute top-0 left-0 w-full z-10 pointer-events-none">
-  <Image
-    src="/upp.svg"
-    alt="top decoration"
-    width={1920}
-    height={300}
-    className="
-      w-full
-      h-auto
-      max-h-[220px]
-      sm:max-h-[260px]
-      lg:max-h-[300px]
-    "
-    priority
-  />
-</div>
+        {/* CONTENT WRAPPER */}
+        <div className="relative z-0 md:pt-3 pt-1 md:pb-3">
+          <AvalonNewsletter />
+        </div>
 
-
-  {/* CONTENT WRAPPER */}
-  <div className="
-  relative z-0
-  md:pt-3 
-  pt-1
-  md:pb-3
-  
-">
-  <AvalonNewsletter />
-</div>
-
-
-  {/* BOTTOM DECORATION */}
-  <div className="absolute bottom-0 left-0 w-full z-10 pointer-events-none rotate-180">
-  <Image
-    src="/bott.svg"
-    alt="bottom decoration"
-    width={1920}
-    height={300}
-    className="
-      w-full
-      h-auto
-      max-h-[220px]
-      sm:max-h-[260px]
-      lg:max-h-[300px]
-    "
-    priority
-  />
-</div>
-
-
-</section>
-
+        {/* BOTTOM DECORATION */}
+        <div className="absolute bottom-0 left-0 w-full z-10 pointer-events-none rotate-180">
+          <Image
+            src="/bott.svg"
+            alt="bottom decoration"
+            width={1920}
+            height={300}
+            className="w-full h-auto max-h-[300px]"
+            priority
+          />
+        </div>
+      </section>
 
       <RegistrationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
