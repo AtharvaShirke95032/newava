@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import CyberpunkButton from '@/components/ui/CyberpunkButton';
 
 export default function AdminLogin() {
     const [password, setPassword] = useState('');
@@ -41,9 +40,12 @@ export default function AdminLogin() {
 
                     {error && <p className="text-cyber-pink text-xs animate-pulse uppercase">{error}</p>}
 
-                    <CyberpunkButton color="pink" type="submit" className="w-full">
+                    <button
+                        type="submit"
+                        className="w-full bg-black text-cyber-pink border border-cyber-pink py-3 font-bold uppercase tracking-widest hover:bg-cyber-pink hover:text-black transition-all"
+                    >
                         INITIALIZE UPLINK
-                    </CyberpunkButton>
+                    </button>
                 </form>
 
                 <div className="mt-8 text-[10px] opacity-30 uppercase">

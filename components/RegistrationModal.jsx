@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 // import CyberpunkButton from './ui/CyberpunkButton';
 
 export default function RegistrationModal({ isOpen, onClose }) {
@@ -102,6 +103,26 @@ export default function RegistrationModal({ isOpen, onClose }) {
                                 <option value="Robo Soccer" className="bg-black">Robo Soccer</option>
                                 <option value="Project Competition" className="bg-black">Project Competition</option>
                             </select>
+
+                            {/* PAYMENT SECTION */}
+                            <div className="border border-yellow-400/30 p-4 bg-yellow-400/5">
+                                <p className="text-yellow-400 font-bold mb-2 text-center tracking-widest uppercase">PAYMENT TERMINAL</p>
+                                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+                                    <div className="relative w-32 h-32 border-2 border-white/20 p-1 bg-white">
+                                        <Image
+                                            src="/payment-qr.png"
+                                            alt="Payment QR"
+                                            fill
+                                            className="object-contain"
+                                        />
+                                    </div>
+                                    <div className="text-center sm:text-left space-y-1">
+                                        <p className="text-xs text-gray-400 uppercase">SCAN TO TRANSFER CREDITS</p>
+                                        <p className="text-sm font-bold text-white tracking-wider break-all">rajsalunke541@okhdfcbank</p>
+                                        <p className="text-[10px] text-cyber-cyan uppercase mt-1">Indian Overseas Bank</p>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div className="border border-white/20 border-dashed p-4 text-center cursor-pointer hover:border-yellow-400 transition-colors">
                                 <label className="block w-full h-full cursor-pointer">
