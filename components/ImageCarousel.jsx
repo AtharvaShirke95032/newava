@@ -215,19 +215,27 @@ export default function MissionBriefing() {
           </div>
 
           {/* RIGHT PANEL (Dynamic Content Area) */}
-          <div className="relative min-h-[500px]">
+          <div className="relative min-h-[600px] md:min-h-[740px] lg:min-h-[860px]">
+
             <AnimatePresence mode="wait">
               
               {/* --- VIEW 1: OBJECTIVE --- */}
               {currentView === "objective" && (
-                <motion.div
-                  key="objective"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-6"
-                >
+                <motion.div 
+                key={event.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="
+                  mt-6
+                  max-w-[720px]
+                  text-base sm:text-lg
+                  leading-7
+                  text-gray-300
+                  min-h-[220px] sm:min-h-[260px] lg:min-h-[300px]
+                "
+              >
+              
                   <div className="relative h-[260px] sm:h-[360px] lg:h-[520px] border border-white/10 bg-zinc-900 flex items-center justify-center overflow-hidden">
                      {/* Decorative BG */}
                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-800 to-black opacity-40" />

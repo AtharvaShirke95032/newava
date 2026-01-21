@@ -5,7 +5,8 @@ import RegistrationModal from "@/components/RegistrationModal";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import AvalonNewsletter from "@/components/Newsletter";
 
 export default function Home() {
   // Animation variants
@@ -210,10 +211,60 @@ export default function Home() {
         <MissionBriefing />
       </section>
 
-      <section className="relative text-white text-center py-10">
-      <Image src="/upp.svg" alt="button" fill className="absolute object-contain top-0" />
-        <Newsletter/>
-      </section>
+      <section className="relative w-full overflow-hidden">
+
+  {/* TOP DECORATION */}
+  <div className="absolute top-0 left-0 w-full z-10 pointer-events-none">
+  <Image
+    src="/upp.svg"
+    alt="top decoration"
+    width={1920}
+    height={300}
+    className="
+      w-full
+      h-auto
+      max-h-[220px]
+      sm:max-h-[260px]
+      lg:max-h-[300px]
+    "
+    priority
+  />
+</div>
+
+
+  {/* CONTENT WRAPPER */}
+  <div className="
+  relative z-0
+  md:pt-3 
+  pt-1
+  md:pb-3
+  
+">
+  <AvalonNewsletter />
+</div>
+
+
+  {/* BOTTOM DECORATION */}
+  <div className="absolute bottom-0 left-0 w-full z-10 pointer-events-none rotate-180">
+  <Image
+    src="/bott.svg"
+    alt="bottom decoration"
+    width={1920}
+    height={300}
+    className="
+      w-full
+      h-auto
+      max-h-[220px]
+      sm:max-h-[260px]
+      lg:max-h-[300px]
+    "
+    priority
+  />
+</div>
+
+
+</section>
+
 
       <RegistrationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>

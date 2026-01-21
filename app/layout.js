@@ -1,6 +1,7 @@
 import { Orbitron, Geist_Mono, VT323 } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
+import { Component } from "@/components/flickering-footer";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
         {/* <Navbar /> */}
         <Navbar/>
         {children}
+        <Component/>
       </body>
     </html>
   );
