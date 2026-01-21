@@ -1,10 +1,11 @@
 "use client"
 import MissionBriefing from "@/components/ImageCarousel";
 import Navbar from "@/components/navbar";
+import RegistrationModal from "@/components/RegistrationModal";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   // Animation variants
@@ -12,6 +13,8 @@ export default function Home() {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
   };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fadeInVariant = {
     hidden: { opacity: 0 },
@@ -149,6 +152,10 @@ export default function Home() {
                 hover:drop-shadow-[0_0_12px_rgba(255,214,0,0.45)]
                 active:scale-[0.98]
               "
+              onClick={(e) => {
+                e.preventDefault();
+                setIsModalOpen(true);
+              }}
             >
               <Image src="/btn2.svg" alt="button" fill className="object-contain" />
               <span className="absolute inset-0 flex items-center justify-center font-bold uppercase text-xs sm:text-sm tracking-widest whitespace-nowrap pointer-events-none">
@@ -205,6 +212,8 @@ export default function Home() {
 
       <section className="text-white text-center py-10">
       </section>
+
+      <RegistrationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
