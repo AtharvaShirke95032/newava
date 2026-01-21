@@ -53,7 +53,7 @@ export default function Home() {
 
           {/* Overlays */}
           <div className="absolute inset-0 bg-black/10" />
-          <div className="absolute left-0 right-0 w-full h-[440px] z-50 bg-repeat-x pointer-events-none"
+          <div className="absolute left-0 right-0 w-full h-[440px] z-20 bg-repeat-x pointer-events-none"
             style={{
               bottom: '-150px', backgroundImage: "url('/noise.png'), url('/noisepat.png')",
               backgroundPosition: "top, top 440px center", backgroundSize: "auto, auto"
