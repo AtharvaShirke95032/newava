@@ -258,8 +258,9 @@ export default function MissionBriefing() {
                   className="h-full"
                 >
                   <div className="relative h-[260px] sm:h-[360px] lg:h-[520px] w-full border border-yellow-400/50 overflow-hidden">
+                 
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.441113221976!2d73.02987531490074!3d19.04433398710594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c3c0ca636303%3A0x675b6302a2434522!2sTerna%20Engineering%20College!5e0!3m2!1sen!2sin!4v1679234567890!5m2!1sen!2sin"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.7753485018125!2d73.01406817580538!3d19.029618453425847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c3eaaa53c4e3%3A0x9459161291e7ded5!2sTerna%20Engineering%20College!5e0!3m2!1sen!2sin!4v1769019592074!5m2!1sen!2sin"
                       width="100%"
                       height="100%"
                       style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) contrast(90%)" }}
