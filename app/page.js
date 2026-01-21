@@ -1,12 +1,18 @@
-
+import MissionBriefing from "@/components/ImageCarousel";
 import Navbar from "@/components/navbar";
+
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="relative w-full">
-      {/* Hero Section */}
-      <section className="relative w-full min-h-screen">
+    <div className="relative w-full overflow-x-hidden bg-black">
+
+      {/* NAVBAR */}
+      {/* <Navbar /> */}
+
+      {/* ================= HERO SECTION ================= */}
+      <section className="relative w-full min-h-screen flex items-center justify-center">
+
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <video
@@ -18,85 +24,65 @@ export default function Home() {
           >
             <source src="/back2.mp4" type="video/mp4" />
           </video>
-          {/* Optional overlay for better text readability */}
-          {/* <div className="absolute inset-0 bg-black/30 z-10" /> */}
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute left-0 right-0 w-full h-[440px] z-20 bg-repeat-x pointer-events-none"
+           style={{ bottom: '-150px', backgroundImage: "url('/noise.png'), url('/noisepat.png')", 
+           backgroundPosition: "top, top 440px center", backgroundSize: "auto, auto" }} />
         </div>
 
-        {/* Noise Pattern - Blended at bottom of video */}
-        <div
-          className="absolute left-0 right-0 w-full h-[440px] z-20 bg-repeat-x pointer-events-none"
-          style={{
-            bottom: '-150px',
-            backgroundImage: "url('/noise.png'), url('/noisepat.png')",
-            backgroundPosition: "top, top 440px center",
-            backgroundSize: "auto, auto"
-          }}
-        />
-
         {/* Hero Content */}
-        <div className="relative flex flex-col gap-10 justify-center items-center z-10 min-h-screen">
+        <div className="relative z-10 flex flex-col items-center gap-6 text-center px-4">
+          <Image
+            src="/text2.png"
+            alt="Avalon Logo"
+            width={677}
+            height={369}
+            className="w-[260px] sm:w-[420px] lg:w-[677px]"
+          />
 
-          <Image src="/text2.png" alt="logo" width={677} height={369} className="pt-40" />
-          <p className="text-white text-xl ">Register now</p>
-          <a className="relative inline-block w-[252px] h-[48px] cursor-pointer">
-            <Image
-              src="/btn.svg"
-              alt="button"
-              fill
-              className="object-contain"
-            />
+          <p className="text-white text-sm sm:text-lg">
+            Register now
+          </p>
 
-            <span className="absolute inset-0 flex items-center justify-center  font-bold uppercase text-sm tracking-widest pointer-events-none">
+          <a className="relative w-[220px] sm:w-[252px] h-[48px]">
+            <Image src="/btn.svg" alt="button" fill className="object-contain" />
+            <span className="absolute inset-0 flex items-center justify-center font-bold uppercase text-sm tracking-widest">
               Register
             </span>
           </a>
-
         </div>
-
       </section>
 
-      {/* Content Section Below Hero */}
-      <section className="absolute p-10 top-210 w-full z-50 flex justify-center">
-        <div
-          className="
-        absolute inset-0
-        pointer-events-none
-        opacity-30
-        [background-image:radial-gradient(circle,#fcee0a_1px,transparent_1px)]
-        [background-size:80px_80px]
-      "
-        />
-        {/* <div className="absolute border-t-3 w-full border-yellow-400/10"></div>
-          <div className="absolute bottom-0 border-t-3 w-full border-yellow-400/10"></div> */}
-        <div className="relative w-full max-w-[1100px] px-20 py-14  text-white">
+      {/* ================= WHAT IS AVALON ================= */}
+      <section className="relative w-full flex justify-center px-4 sm:px-6 lg:px-10 py-16 lg:py-24">
+        <div className="relative w-full max-w-[1100px] px-6 sm:px-10 lg:px-20 py-10 lg:py-14 text-white">
 
-          <span className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-yellow-400" />
-          <span className="absolute top-0 right-0 w-8 h-8 border-r-2 border-t-2 border-yellow-400" />
-          <span className="absolute bottom-0 left-0 w-8 h-8 border-l-2 border-b-2 border-yellow-400" />
-          <span className="absolute bottom-0 right-0 w-8 h-8 border-r-2 border-b-2 border-yellow-400" />
+          {/* Border corners */}
+          <span className="absolute top-0 left-0 w-6 h-6 border-l-2 border-t-2 border-yellow-400" />
+          <span className="absolute top-0 right-0 w-6 h-6 border-r-2 border-t-2 border-yellow-400" />
+          <span className="absolute bottom-0 left-0 w-6 h-6 border-l-2 border-b-2 border-yellow-400" />
+          <span className="absolute bottom-0 right-0 w-6 h-6 border-r-2 border-b-2 border-yellow-400" />
 
-          <h2 
-            className="text-center text-yellow-400 font-extrabold uppercase text-7xl mb-8"
+          <h2
+            className="text-center text-yellow-400 font-extrabold uppercase text-4xl sm:text-5xl lg:text-7xl mb-6"
             style={{ fontFamily: '"VT323", monospace' }}
           >
             What is Avalon
           </h2>
 
-          <p className="max-w-[760px] mx-auto text-md leading-8 text-center text-gray-200">
-            Welcome to Avalon 2026, where technology meets imagination. Our annual techfest brings together the brightest minds to explore the frontiers of innovation and creativity.
+          <p className="max-w-[760px] mx-auto text-sm sm:text-base leading-7 sm:leading-8 text-center text-gray-200">
+            Welcome to Avalon 2026, where technology meets imagination. Our annual
+            techfest brings together the brightest minds to explore the
+            frontiers of innovation and creativity.
           </p>
-
         </div>
-
       </section>
-     
 
-
+      {/* ================= MISSION BRIEFING ================= */}
+      <section className="relative mt-20 lg:mt-32">
+        <MissionBriefing />
+      </section>
 
     </div>
-
-
-
-
   );
 }
