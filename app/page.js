@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import Newsletter from "@/components/Newsletter";
 
 export default function Home() {
   // Animation variants
@@ -203,7 +204,9 @@ export default function Home() {
         <MissionBriefing />
       </section>
 
-      <section className="text-white text-center py-10">
+      <section className="relative text-white text-center py-10">
+      <Image src="/upp.svg" alt="button" fill className="absolute object-contain top-0" />
+        <Newsletter/>
       </section>
     </div>
   );
