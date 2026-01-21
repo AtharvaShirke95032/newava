@@ -1,23 +1,40 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-// import CyberpunkButton from './ui/CyberpunkButton';
 
-export default function RegistrationModal({ isOpen, onClose }) {
+export default function RegistrationModal({ isOpen, onClose, defaultEvent = 'Offline Hackathon' }) {
+    const EVENT_MEMBERS = {
+        'Offline Hackathon': '2-4',
+        'Robo Race': '2',
+        'Robo Soccer': '3',
+        'Project Competition': '3'
+    };
+
     const [formData, setFormData] = useState({
         teamName: '',
         leadName: '',
         email: '',
         phone: '',
-        members: '',
+        members: EVENT_MEMBERS[defaultEvent], // default based on event
         college: '',
-        event: 'Offline Hackathon', // Default
+        event: defaultEvent,
         screenshot: null
     });
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [message, setMessage] = useState('');
+
+    // Whenever event changes, update the members field
+    const handleEventChange = (e) => {
+        const selectedEvent = e.target.value;
+        setFormData(prev => ({
+            ...prev,
+            event: selectedEvent,
+            members: EVENT_MEMBERS[selectedEvent]
+        }));
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -60,6 +77,15 @@ export default function RegistrationModal({ isOpen, onClose }) {
         }
     };
 
+    // When defaultEvent changes from parent, update members
+    useEffect(() => {
+        setFormData(prev => ({
+            ...prev,
+            event: defaultEvent,
+            members: EVENT_MEMBERS[defaultEvent]
+        }));
+    }, [defaultEvent]);
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -75,7 +101,6 @@ export default function RegistrationModal({ isOpen, onClose }) {
                         exit={{ scale: 0.9, opacity: 0 }}
                         className="w-full max-w-2xl bg-black border border-yellow-400 p-6 sm:p-8 relative overflow-hidden"
                     >
-                        {/* Decorative elements */}
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-50"></div>
                         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-yellow-400 transition-colors font-mono">[CLOSE]</button>
 
@@ -93,18 +118,18 @@ export default function RegistrationModal({ isOpen, onClose }) {
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <input type="number" name="members" placeholder="SQUAD SIZE" onChange={handleChange} required className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors" />
+                                <input type="text" name="members" placeholder="SQUAD SIZE" value={formData.members} readOnly className="bg-white/5 border border-white/20 p-3 text-white cursor-not-allowed" />
                                 <input name="college" placeholder="BASE OF OPERATIONS (COLLEGE)" onChange={handleChange} required className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors" />
                             </div>
 
-                            <select name="event" onChange={handleChange} className="w-full bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors">
+                            <select name="event" value={formData.event} onChange={handleEventChange} className="w-full bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors">
                                 <option value="Offline Hackathon" className="bg-black">Offline Hackathon</option>
                                 <option value="Robo Race" className="bg-black">Robo Race</option>
                                 <option value="Robo Soccer" className="bg-black">Robo Soccer</option>
                                 <option value="Project Competition" className="bg-black">Project Competition</option>
                             </select>
 
-                            {/* PAYMENT SECTION */}
+                            {/* PAYMENT & FILE UPLOAD */}
                             <div className="border border-yellow-400/30 p-4 bg-yellow-400/5">
                                 <p className="text-yellow-400 font-bold mb-2 text-center tracking-widest uppercase">PAYMENT TERMINAL</p>
                                 <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
