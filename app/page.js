@@ -25,7 +25,7 @@ export default function Home() {
           >
             <source src="/lol.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/20" />
           <div className="absolute left-0 right-0 w-full h-[440px] z-20 bg-repeat-x pointer-events-none"
             style={{
               bottom: '-150px', backgroundImage: "url('/noise.png'), url('/noisepat.png')",
@@ -175,11 +175,12 @@ export default function Home() {
             What is Avalon
           </h2>
 
-          <p className="max-w-[760px] mx-auto text-sm sm:text-base leading-7 sm:leading-8 text-center text-gray-200">
-            Welcome to Avalon 2026, where technology meets imagination. Our annual
-            techfest brings together the brightest minds to explore the
-            frontiers of innovation and creativity.
-          </p>
+          <p className="max-w-[760px] mx-auto text-base sm:text-lg leading-8 sm:leading-9 text-center text-gray-200">
+  Welcome to Avalon 2026, where technology meets imagination. Our annual
+  techfest brings together the brightest minds to explore the
+  frontiers of innovation and creativity.
+</p>
+
         </div>
 
       </section>

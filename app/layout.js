@@ -27,6 +27,7 @@ export default function RootLayout({ children }) {
         className={`${orbitron.variable} ${vt323.variable} font-sans antialiased dark`}
       >
         {/* <Navbar /> */}
+        <Navbar/>
         {children}
       </body>
     </html>
