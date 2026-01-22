@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { QRCodeCanvas } from "qrcode.react";
 
 export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }) {
+  // --- UPDATED DATA ---
   const EVENT_DETAILS = {
-    "ROBO RACE": { members: "2-4", amount: 400 },
+    "ROBO RACE": { members: "1", amount: 150 }, // Updated to Individual
     "ROBO SOCCER": { members: "2-4", amount: 300 },
     "PROJECT COMPETITION": { members: "2-4", amount: 400 },
     "REVERSE CODING": { members: "2", amount: 250 },
@@ -51,13 +52,21 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
     setMessage("");
+
+    // --- VALIDATION CHECK FOR SCREENSHOT ---
+    if (!formData.screenshot) {
+      setMessage("ERROR: TRANSACTION PROOF IS REQUIRED");
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       const data = new FormData();
       Object.keys(formData).forEach((key) => data.append(key, formData[key]));
 
+      // Replace this with your actual API endpoint
       const res = await fetch("/api/register", {
         method: "POST",
         body: data,
@@ -72,7 +81,11 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
         setMessage(`ERROR: ${result.error}`);
       }
     } catch (err) {
-      setMessage("SYSTEM FAILURE: CONNECTION REFUSED");
+      // For demo purposes, simulating success if API doesn't exist yet
+      console.error(err);
+      setMessage("SYSTEM FAILURE: CONNECTION REFUSED (API MOCK)");
+      // Remove the line below in production
+      setTimeout(onClose, 2000); 
     } finally {
       setIsSubmitting(false);
     }
@@ -89,168 +102,222 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm overflow-auto"
+          // FIXED: overflow-y-auto on the fixed container allows scrolling the whole modal if it gets too tall
+          className="fixed inset-0 z-[100] overflow-y-auto bg-black/80 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <motion.div
-            className="w-full max-w-3xl bg-black border border-yellow-400 p-4 sm:p-6 md:p-8 relative overflow-hidden rounded-lg"
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-          >
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 text-gray-400 hover:text-yellow-400 transition-colors font-mono z-10"
+          {/* FIXED: min-h-full flex items-center ensures top doesn't get cut off on scroll */}
+          <div className="flex min-h-full items-center justify-center p-4">
+            <motion.div
+              className="w-full max-w-3xl bg-black border border-yellow-400 relative rounded-lg shadow-2xl flex flex-col"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
             >
-              [CLOSE]
-            </button>
-
-            <h2 className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-6 font-vt323 tracking-wider text-center glitch-text">
-              OPERATIVE REGISTRATION
-            </h2>
-
-            <form onSubmit={handleSubmit} className="space-y-4 font-mono text-sm sm:text-base">
-              {/* Team & Leader */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  name="teamName"
-                  placeholder="TEAM DESIGNATION"
-                  value={formData.teamName}
-                  onChange={handleChange}
-                  required
-                  className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
-                />
-                <input
-                  name="leadName"
-                  placeholder="SQUAD LEADER"
-                  value={formData.leadName}
-                  onChange={handleChange}
-                  required
-                  className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
-                />
-              </div>
-
-              {/* Contact Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="COMM LINK (EMAIL)"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
-                />
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="FREQUENCY (PHONE)"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
-                />
-              </div>
-
-              {/* Event Selector & Members */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <select
-                  name="event"
-                  value={formData.event}
-                  onChange={handleChange}
-                  required
-                  className="bg-black border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
+              
+              {/* FIXED: STICKY HEADER ensures Close button is always visible */}
+              <div className="sticky top-0 z-50 bg-black/95 border-b border-yellow-400/30 px-6 py-4 flex justify-between items-center backdrop-blur">
+                <h2 className="text-xl sm:text-2xl font-bold text-yellow-400 font-vt323 tracking-wider glitch-text">
+                  OPERATIVE REGISTRATION
+                </h2>
+                <button
+                  onClick={onClose}
+                  className="text-gray-400 hover:text-red-500 transition-colors font-mono font-bold text-lg"
                 >
-                  <option value="" disabled>
-                    SELECT MISSION
-                  </option>
-                  {Object.keys(EVENT_DETAILS).map((ev) => (
-                    <option key={ev} value={ev}>
-                      {ev}
-                    </option>
-                  ))}
-                </select>
-
-                <input
-                  type="text"
-                  name="members"
-                  value={formData.members}
-                  disabled
-                  className="bg-white/10 border border-white/20 p-3 text-gray-400 cursor-not-allowed w-full"
-                />
+                  [CLOSE]
+                </button>
               </div>
 
-              {/* College */}
-              <input
-                name="college"
-                placeholder="BASE OF OPERATIONS (COLLEGE)"
-                value={formData.college}
-                onChange={handleChange}
-                required
-                className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
-              />
-
-              {/* Transaction Proof Upload */}
-              <div className="border border-white/20 border-dashed p-4 text-center cursor-pointer hover:border-yellow-400 transition-colors">
-                <label className="block w-full h-full cursor-pointer">
-                  <span className="text-gray-400">
-                    {formData.screenshot ? formData.screenshot.name : "UPLOAD TRANSACTION PROOF"}
-                  </span>
-                  <input
-                    type="file"
-                    name="screenshot"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                </label>
-              </div>
-
-              {/* PAYMENT QR */}
-              {amount > 0 && (
-                <div className="border border-yellow-400/30 p-4 bg-yellow-400/5 text-center rounded-md">
-                  <p className="text-yellow-400 font-bold mb-2 text-center tracking-widest uppercase">
-                    PAYMENT TERMINAL
-                  </p>
-                  <div className="flex flex-col items-center justify-center gap-3">
-                    <QRCodeCanvas value={upiString} size={200} level="H" />
-                    <p className="text-white font-bold tracking-wider">
-                      UPI ID: {upiId} | ₹{amount}
-                    </p>
-                    <p className="text-xs text-gray-400 uppercase">
-                      Scan to transfer credits
-                    </p>
+              <div className="p-6 md:p-8">
+                <form onSubmit={handleSubmit} className="space-y-5 font-mono text-sm sm:text-base">
+                  
+                  {/* Team & Leader */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-gray-500">TEAM DESIGNATION</label>
+                      <input
+                        name="teamName"
+                        placeholder="ENTER TEAM NAME"
+                        value={formData.teamName}
+                        onChange={handleChange}
+                        required
+                        className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-gray-500">SQUAD LEADER</label>
+                      <input
+                        name="leadName"
+                        placeholder="ENTER LEADER NAME"
+                        value={formData.leadName}
+                        onChange={handleChange}
+                        required
+                        className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
+                      />
+                    </div>
                   </div>
-                </div>
-              )}
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full py-4 font-bold tracking-widest uppercase transition-all ${
-                  isSubmitting
-                    ? "bg-gray-800 text-gray-500 cursor-not-allowed"
-                    : "bg-yellow-400 text-black hover:bg-yellow-300 hover:shadow-[0_0_20px_rgba(250,204,21,0.4)]"
-                }`}
-              >
-                {isSubmitting ? "TRANSMITTING..." : "INITIATE REGISTRATION"}
-              </button>
+                  {/* Contact Info */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-gray-500">COMM LINK (EMAIL)</label>
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="example@domain.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                        className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-gray-500">FREQUENCY (PHONE)</label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        placeholder="123-456-7890"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
+                      />
+                    </div>
+                  </div>
 
-              {message && (
-                <p
-                  className={`text-center mt-4 ${
-                    message.includes("ERROR") || message.includes("FAILURE")
-                      ? "text-red-500"
-                      : "text-green-400"
-                  }`}
-                >
-                  {message}
-                </p>
-              )}
-            </form>
-          </motion.div>
+                  {/* Event Selector & Members */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-yellow-400 font-bold">SELECT MISSION</label>
+                      <select
+                        name="event"
+                        value={formData.event}
+                        onChange={handleChange}
+                        required
+                        className="bg-black border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
+                      >
+                        <option value="" disabled>
+                          CHOOSE PROTOCOL
+                        </option>
+                        {Object.keys(EVENT_DETAILS).map((ev) => (
+                          <option key={ev} value={ev}>
+                            {ev}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-gray-500">ALLOWED OPERATIVES</label>
+                      <input
+                        type="text"
+                        name="members"
+                        value={formData.members}
+                        disabled
+                        className="bg-white/10 border border-white/20 p-3 text-gray-400 cursor-not-allowed w-full font-bold"
+                      />
+                    </div>
+                  </div>
+
+                  {/* College */}
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs text-gray-500">BASE OF OPERATIONS</label>
+                    <input
+                      name="college"
+                      placeholder="COLLEGE NAME"
+                      value={formData.college}
+                      onChange={handleChange}
+                      required
+                      className="bg-white/5 border border-white/20 p-3 text-white focus:border-yellow-400 focus:outline-none transition-colors w-full"
+                    />
+                  </div>
+
+                  {/* PAYMENT QR SECTION - Only shows if amount > 0 */}
+                  {amount > 0 && (
+                    <div className="border border-yellow-400/30 p-4 bg-yellow-400/5 rounded-md mt-6">
+                      <p className="text-yellow-400 font-bold mb-4 text-center tracking-widest uppercase border-b border-yellow-400/20 pb-2">
+                        SECURE PAYMENT TERMINAL
+                      </p>
+                      <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                        <div className="bg-white p-2 rounded">
+                          <QRCodeCanvas value={upiString} size={160} level="H" />
+                        </div>
+                        <div className="text-center md:text-left space-y-2">
+                          <p className="text-white font-bold tracking-wider text-lg">
+                            AMOUNT: <span className="text-yellow-400">₹{amount}</span>
+                          </p>
+                          <p className="text-gray-400 text-sm">
+                            UPI ID: <span className="select-all text-white">{upiId}</span>
+                          </p>
+                          <p className="text-xs text-gray-500 uppercase max-w-[200px]">
+                            Scan QR or copy UPI ID to transfer credits. Screenshot required.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Transaction Proof Upload - COMPULSORY */}
+                  <div className="flex flex-col gap-2">
+                     <label className="text-xs text-yellow-400 font-bold uppercase">
+                        Proof of Transaction (Required) *
+                     </label>
+                    <div 
+                      className={`border-2 border-dashed p-6 text-center cursor-pointer transition-colors ${
+                        formData.screenshot ? 'border-green-500 bg-green-500/10' : 'border-white/20 hover:border-yellow-400'
+                      }`}
+                    >
+                      <label className="block w-full h-full cursor-pointer">
+                        <span className={formData.screenshot ? "text-green-400 font-bold" : "text-gray-400"}>
+                          {formData.screenshot 
+                            ? `[FILE ACQUIRED]: ${formData.screenshot.name}` 
+                            : "[CLICK TO UPLOAD PAYMENT SCREENSHOT]"}
+                        </span>
+                        <input
+                          type="file"
+                          name="screenshot"
+                          accept="image/*"
+                          onChange={handleFileChange}
+                          required // HTML5 Validation
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* SUBMIT BUTTON */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full py-4 font-bold tracking-widest uppercase transition-all border border-transparent ${
+                      isSubmitting
+                        ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                        : "bg-yellow-400 text-black hover:bg-yellow-300 hover:scale-[1.01] active:scale-[0.99] shadow-[0_0_20px_rgba(250,204,21,0.4)]"
+                    }`}
+                  >
+                    {isSubmitting ? "TRANSMITTING DATA..." : "CONFIRM REGISTRATION"}
+                  </button>
+
+                  {/* FEEDBACK MESSAGES */}
+                  {message && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`p-3 text-center font-bold border ${
+                        message.includes("ERROR") || message.includes("FAILURE")
+                          ? "border-red-500 bg-red-500/10 text-red-500"
+                          : "border-green-500 bg-green-500/10 text-green-400"
+                      }`}
+                    >
+                      {message}
+                    </motion.div>
+                  )}
+                </form>
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
