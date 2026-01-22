@@ -141,6 +141,19 @@ export default function MissionBriefing() {
 
   return (
     <section className="w-full bg-black py-12 lg:py-16 text-white overflow-hidden">
+      {/* This style block forces the scrollbar to be hidden 
+        while still allowing the user to scroll horizontally 
+      */}
+      <style jsx global>{`
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+      `}</style>
+
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* --- MOBILE NAVIGATION --- */}
         <div className="flex flex-col lg:hidden mb-6 space-y-4">
@@ -354,7 +367,6 @@ export default function MissionBriefing() {
                   </div>
 
                   {/* THUMBNAILS - SCROLLABLE CONTAINER */}
-                  {/* FIX: Replaced 'pb-2' with 'p-2' to provide padding on all sides, preventing cutoff */}
                   <div className="hidden lg:flex gap-3 mt-4 justify-start overflow-x-auto p-2 scrollbar-hide w-full max-w-full">
                     {EVENTS.map((e, index) => (
                       <button
