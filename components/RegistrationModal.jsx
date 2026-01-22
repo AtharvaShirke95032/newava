@@ -52,6 +52,7 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true)
     setMessage("");
 
     // --- VALIDATION CHECK FOR SCREENSHOT ---
