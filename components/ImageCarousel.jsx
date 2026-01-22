@@ -141,16 +141,30 @@ export default function MissionBriefing() {
 
   return (
     <section className="w-full bg-black py-12 lg:py-16 text-white overflow-hidden">
-      {/* This style block forces the scrollbar to be hidden 
-        while still allowing the user to scroll horizontally 
-      */}
+      
+      {/* --- CUSTOM SCROLLBAR STYLES --- */}
       <style jsx global>{`
-        .scrollbar-hide::-webkit-scrollbar {
-            display: none;
+        /* The container for the scrollbar */
+        .cyber-scrollbar::-webkit-scrollbar {
+          height: 6px; /* Slim horizontal bar */
+          background-color: #000;
         }
-        .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+
+        /* The track (background) */
+        .cyber-scrollbar::-webkit-scrollbar-track {
+          background-color: #18181b; /* zinc-900 */
+          border: 1px solid #333;
+        }
+
+        /* The draggable handle */
+        .cyber-scrollbar::-webkit-scrollbar-thumb {
+          background-color: #facc15; /* Yellow-400 */
+          border-radius: 0px; /* Square edges for tech look */
+        }
+
+        /* Handle on hover */
+        .cyber-scrollbar::-webkit-scrollbar-thumb:hover {
+          background-color: #eab308; /* Yellow-500 */
         }
       `}</style>
 
@@ -367,7 +381,8 @@ export default function MissionBriefing() {
                   </div>
 
                   {/* THUMBNAILS - SCROLLABLE CONTAINER */}
-                  <div className="hidden lg:flex gap-3 mt-4 justify-start overflow-x-auto p-2 scrollbar-hide w-full max-w-full">
+                  {/* UPDATED: Removed scrollbar-hide, added cyber-scrollbar class */}
+                  <div className="hidden lg:flex gap-3 mt-4 justify-start overflow-x-auto p-2 cyber-scrollbar w-full max-w-full">
                     {EVENTS.map((e, index) => (
                       <button
                         key={e.id}
