@@ -99,6 +99,7 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
       ? `upi://pay?pa=${upiId}&pn=TechFest+Avalon&am=${amount}&cu=INR`
       : null;
 
+      
   return (
     <AnimatePresence>
       {isOpen && (
