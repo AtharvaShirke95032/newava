@@ -2,9 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRegistration } from "./RegistrationContext";
 
-const Navbar = ({ onOpenRegister }) => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { openModal } = useRegistration();
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -54,7 +56,7 @@ const Navbar = ({ onOpenRegister }) => {
             {/* Register Button */}
             <div className="h-full flex items-center ml-4">
               <button
-                onClick={() => onOpenRegister()}
+                onClick={openModal}
                 className="relative group bg-[#FCEE0A] text-black font-extrabold text-sm p-3 skew-x-[-15deg] border-1 border-yellow-400/90 transition-all duration-300 hover:bg-white hover:scale-105"
               >
                 <span className="relative z-10 block skew-x-[15deg]">Register now</span>
@@ -85,9 +87,8 @@ const Navbar = ({ onOpenRegister }) => {
 
       {/* Mobile Overlay */}
       <div
-        className={`fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out ${
-          isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-black/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out ${isOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"
+          }`}
       >
         <div className="flex flex-col space-y-8 text-center w-full px-8">
           <span
@@ -102,13 +103,17 @@ const Navbar = ({ onOpenRegister }) => {
           >
             Missions
           </span>
-
           <button
-            onClick={() => { setIsOpen(false); onOpenRegister(); }}
-            className="mt-8 inline-block bg-[#FCEE0A] text-black font-black text-xl sm:text-2xl py-3 px-10 uppercase tracking-widest hover:bg-white hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(252,238,10,0.4)]"
-            style={{ clipPath: "polygon(10% 0, 100% 0, 90% 100%, 0% 100%)" }}
+            onClick={() => {
+              setIsOpen(false);
+              openModal();
+            }}
+            className="mt-8 inline-block bg-[#FCEE0A] text-black font-black text-xl sm:text-2xl py-3 px-10 uppercase tracking-widest hover:bg-white hover:scale-105 transition-transform duration-300 shadow-[0_0_20px_rgba(252,238,10,0.4)] cursor-pointer"
+            style={{
+              clipPath: "polygon(10% 0, 100% 0, 90% 100%, 0% 100%)",
+            }}
           >
-            Register now
+            Register Now
           </button>
         </div>
       </div>

@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import RegistrationModal from "@/components/RegistrationModal";
+import { useRegistration } from "@/components/RegistrationContext";
 
 // --- DATA ---
 const EVENTS = [
@@ -20,6 +20,10 @@ const EVENTS = [
         </p>
         <p className="mt-2 text-base lg:text-lg text-gray-300">
           Bring your coding skills, ideas, and adrenaline for an epic journey into the world of tech.
+        </p>
+        <p className="mt-4 text-sm font-bold text-yellow-500 uppercase flex items-center gap-2">
+          <span className="w-2 h-2 bg-yellow-400 animate-pulse rounded-full" />
+          Apply via Devfolio for Sponsorship eligibility
         </p>
         <p className="mt-2 text-sm text-gray-400">
           Registration: Free
@@ -132,16 +136,13 @@ const EVENTS = [
 export default function MissionBriefing() {
   const [currentView, setCurrentView] = useState("events");
   const [activeEventIndex, setActiveEventIndex] = useState(0);
-
-  // --- MODAL STATE ---
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(EVENTS[0].title);
+  const { openModal } = useRegistration();
 
   const event = EVENTS[activeEventIndex];
 
   return (
     <section className="w-full bg-black py-12 lg:py-16 text-white overflow-hidden">
-      
+
       {/* --- CUSTOM SCROLLBAR STYLES --- */}
       <style jsx global>{`
         /* The container for the scrollbar */
@@ -174,25 +175,22 @@ export default function MissionBriefing() {
           <div className="flex flex-wrap gap-4 border-b border-white/10 pb-4">
             <button
               onClick={() => setCurrentView("objective")}
-              className={`uppercase text-sm tracking-widest transition ${
-                currentView === "objective" ? "text-yellow-400 font-bold" : "text-gray-400"
-              }`}
+              className={`uppercase text-sm tracking-widest transition ${currentView === "objective" ? "text-yellow-400 font-bold" : "text-gray-400"
+                }`}
             >
               Objective
             </button>
             <button
               onClick={() => setCurrentView("location")}
-              className={`uppercase text-sm tracking-widest transition ${
-                currentView === "location" ? "text-yellow-400 font-bold" : "text-gray-400"
-              }`}
+              className={`uppercase text-sm tracking-widest transition ${currentView === "location" ? "text-yellow-400 font-bold" : "text-gray-400"
+                }`}
             >
               Location
             </button>
             <button
               onClick={() => setCurrentView("events")}
-              className={`uppercase text-sm tracking-widest transition ${
-                currentView === "events" ? "text-yellow-400 font-bold" : "text-gray-400"
-              }`}
+              className={`uppercase text-sm tracking-widest transition ${currentView === "events" ? "text-yellow-400 font-bold" : "text-gray-400"
+                }`}
             >
               Events
             </button>
@@ -204,11 +202,10 @@ export default function MissionBriefing() {
                 <button
                   key={e.id}
                   onClick={() => setActiveEventIndex(i)}
-                  className={`uppercase text-[10px] sm:text-xs tracking-wider px-2 py-1 border transition ${
-                    activeEventIndex === i
-                      ? "border-yellow-400 text-yellow-400"
-                      : "border-white/20 text-gray-500"
-                  }`}
+                  className={`uppercase text-[10px] sm:text-xs tracking-wider px-2 py-1 border transition ${activeEventIndex === i
+                    ? "border-yellow-400 text-yellow-400"
+                    : "border-white/20 text-gray-500"
+                    }`}
                 >
                   {e.title}
                 </button>
@@ -219,7 +216,7 @@ export default function MissionBriefing() {
 
         {/* GRID LAYOUT */}
         <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] xl:grid-cols-[400px_1fr] gap-6 lg:gap-12">
-          
+
           {/* LEFT PANEL (Desktop Sidebar) */}
           <div className="hidden lg:flex flex-col">
             <h2 className="text-5xl lg:text-5xl xl:text-7xl font-extrabold leading-tight uppercase tracking-widest">
@@ -228,31 +225,28 @@ export default function MissionBriefing() {
             <div className="mt-8 flex flex-col gap-4 text-base xl:text-lg uppercase tracking-wider">
               <button
                 onClick={() => setCurrentView("objective")}
-                className={`w-full text-left border-b pb-2 transition-colors ${
-                  currentView === "objective"
-                    ? "border-yellow-400 text-yellow-400"
-                    : "border-white/20 text-gray-400 hover:text-white"
-                }`}
+                className={`w-full text-left border-b pb-2 transition-colors ${currentView === "objective"
+                  ? "border-yellow-400 text-yellow-400"
+                  : "border-white/20 text-gray-400 hover:text-white"
+                  }`}
               >
                 Objective
               </button>
               <button
                 onClick={() => setCurrentView("location")}
-                className={`w-full text-left border-b pb-2 transition-colors ${
-                  currentView === "location"
-                    ? "border-yellow-400 text-yellow-400"
-                    : "border-white/20 text-gray-400 hover:text-white"
-                }`}
+                className={`w-full text-left border-b pb-2 transition-colors ${currentView === "location"
+                  ? "border-yellow-400 text-yellow-400"
+                  : "border-white/20 text-gray-400 hover:text-white"
+                  }`}
               >
                 Location
               </button>
               <button
                 onClick={() => setCurrentView("events")}
-                className={`w-full text-left border-b pb-2 transition-colors ${
-                  currentView === "events"
-                    ? "border-yellow-400 text-yellow-400"
-                    : "border-white/20 text-gray-400 hover:text-white"
-                }`}
+                className={`w-full text-left border-b pb-2 transition-colors ${currentView === "events"
+                  ? "border-yellow-400 text-yellow-400"
+                  : "border-white/20 text-gray-400 hover:text-white"
+                  }`}
               >
                 Event Details
               </button>
@@ -262,7 +256,7 @@ export default function MissionBriefing() {
           {/* RIGHT PANEL (Content) */}
           <div className="relative w-full max-w-full overflow-hidden min-h-[500px] lg:min-h-[500px]">
             <AnimatePresence mode="wait">
-              
+
               {/* OBJECTIVE VIEW */}
               {currentView === "objective" && (
                 <motion.div
@@ -337,23 +331,26 @@ export default function MissionBriefing() {
                         </h3>
                       </div>
                     </div>
-                    
+
                     {event.id === "innov8" ? (
-                      <a
-                        href="https://innov-77.devfolio.co/overview"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute inset-0 z-20 flex items-center justify-center bg-yellow-400/20 text-black font-bold uppercase tracking-widest hover:bg-yellow-300 transition"
-                      >
-                        Visit INNOV8 4.0
-                      </a>
+                      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm gap-4">
+                        <h4 className="text-yellow-400 font-bold uppercase tracking-widest text-center px-4">
+                          Elite Hackathon Entry
+                        </h4>
+                        <a
+                          href="https://innov-77.devfolio.co/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-yellow-400 text-black px-8 py-3 font-bold uppercase tracking-widest hover:bg-yellow-300 transition shadow-[0_0_20px_rgba(250,204,21,0.4)] cursor-pointer"
+                        >
+                          Register on Devfolio
+                        </a>
+                        <p className="text-[10px] text-gray-400 uppercase mt-2"></p>
+                      </div>
                     ) : (
                       <button
-                        onClick={() => {
-                          setSelectedEvent(event.title);
-                          setIsModalOpen(true);
-                        }}
-                        className="absolute z-20 bottom-4 right-4 bg-yellow-400 text-black px-5 py-2 lg:px-6 lg:py-3 text-sm lg:text-base font-bold uppercase tracking-widest hover:bg-yellow-300 transition shadow-[0_0_20px_rgba(250,204,21,0.4)]"
+                        onClick={() => openModal()}
+                        className="absolute z-20 bottom-4 right-4 bg-yellow-400 text-black px-5 py-2 lg:px-6 lg:py-3 text-sm lg:text-base font-bold uppercase tracking-widest hover:bg-yellow-300 transition shadow-[0_0_20px_rgba(250,204,21,0.4)] cursor-pointer"
                       >
                         Register
                       </button>
@@ -387,11 +384,10 @@ export default function MissionBriefing() {
                       <button
                         key={e.id}
                         onClick={() => setActiveEventIndex(index)}
-                        className={`relative flex-shrink-0 h-[60px] w-[100px] xl:h-[90px] xl:w-[160px] overflow-hidden border-2 transition-all ${
-                          activeEventIndex === index
-                            ? "border-yellow-400 scale-105 z-10 shadow-lg"
-                            : "border-white/20 opacity-60 hover:opacity-100 hover:scale-105"
-                        }`}
+                        className={`relative flex-shrink-0 h-[60px] w-[100px] xl:h-[90px] xl:w-[160px] overflow-hidden border-2 transition-all ${activeEventIndex === index
+                          ? "border-yellow-400 scale-105 z-10 shadow-lg"
+                          : "border-white/20 opacity-60 hover:opacity-100 hover:scale-105"
+                          }`}
                       >
                         <Image src={e.image} alt={e.title} fill className="object-cover" />
                         {activeEventIndex !== index && (
@@ -421,12 +417,6 @@ export default function MissionBriefing() {
         </div>
       </div>
 
-      {/* REGISTRATION MODAL */}
-      <RegistrationModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        defaultEvent={selectedEvent}
-      />
     </section>
   );
 }

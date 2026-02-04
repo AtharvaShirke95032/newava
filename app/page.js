@@ -1,21 +1,21 @@
 "use client"
 import MissionBriefing from "@/components/ImageCarousel";
-import Navbar from "@/components/navbar";
-import RegistrationModal from "@/components/RegistrationModal";
+import { useRegistration } from "@/components/RegistrationContext";
+import Sponsors from "@/components/Sponsors";
+import Newsletter from "@/components/Newsletter";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
-import AvalonNewsletter from "@/components/Newsletter";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { openModal } = useRegistration();
+
   // Animation variants
   const fadeUpVariant = {
     hidden: { opacity: 0, y: 50 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
   };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fadeInVariant = {
     hidden: { opacity: 0 },
@@ -33,9 +33,6 @@ export default function Home() {
   return (
     <div className="relative w-full overflow-x-hidden bg-black">
 
-      {/* NAVBAR */}
-      {/* <Navbar /> */}
-
       {/* ================= HERO SECTION ================= */}
       <section className="relative w-full h-[100dvh] flex items-center justify-center overflow-hidden">
 
@@ -52,7 +49,7 @@ export default function Home() {
           </video>
 
           {/* Overlays */}
-          <div className="absolute inset-0 bg-black/10" />
+          <div className="absolute inset-0 bg-black/20" />
           <div className="absolute left-0 right-0 w-full h-[440px] z-20 bg-repeat-x pointer-events-none"
             style={{
               bottom: '-150px', backgroundImage: "url('/noise.png'), url('/noisepat.png')",
@@ -92,7 +89,7 @@ export default function Home() {
             animate="visible"
             variants={fadeUpVariant}
             transition={{ delay: 0.3 }}
-            className="text-yellow-400 text-[11px] xs:text-xs sm:text-sm md:text-base tracking-widest opacity-90"
+            className="text-white text-[11px] xs:text-xs sm:text-sm md:text-base tracking-widest opacity-90"
           >
             // NEXT GEN TECHFEST // TERNA ENGINEERING COLLEGE //
           </motion.p>
@@ -155,7 +152,7 @@ export default function Home() {
               "
               onClick={(e) => {
                 e.preventDefault();
-                setIsModalOpen(true);
+                openModal();
               }}
             >
               <Image src="/btn2.svg" alt="button" fill className="object-contain" />
@@ -211,62 +208,13 @@ export default function Home() {
         <MissionBriefing />
       </section>
 
-      <section className="relative w-full overflow-hidden">
+      {/* ================= SPONSORS ================= */}
+      <Sponsors />
 
-  {/* TOP DECORATION */}
-  <div className="absolute top-0 left-0 w-full z-10 pointer-events-none">
-  <Image
-    src="/upp.svg"
-    alt="top decoration"
-    width={1920}
-    height={300}
-    className="
-      w-full
-      h-auto
-      max-h-[220px]
-      sm:max-h-[260px]
-      lg:max-h-[300px]
-    "
-    priority
-  />
-</div>
-
-
-  {/* CONTENT WRAPPER */}
-  <div className="
-  relative z-0
-  md:pt-3 
-  pt-1
-  md:pb-3
-  
-">
-  <AvalonNewsletter />
-</div>
-
-
-  {/* BOTTOM DECORATION */}
-  <div className="absolute bottom-0 left-0 w-full z-10 pointer-events-none rotate-180">
-  <Image
-    src="/bott.svg"
-    alt="bottom decoration"
-    width={1920}
-    height={300}
-    className="
-      w-full
-      h-auto
-      max-h-[220px]
-      sm:max-h-[260px]
-      lg:max-h-[300px]
-    "
-    priority
-  />
-</div>
-
-
-</section>
-
-
-      <RegistrationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <section className="relative text-white text-center py-10">
+        <Image src="/upp.svg" alt="button" fill className="absolute object-contain top-0" />
+        <Newsletter />
+      </section>
     </div>
   );
 }
