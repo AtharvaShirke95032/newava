@@ -10,9 +10,9 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
     "ROBO RACE": { members: "1", amount: 150 }, // Updated to Individual
     "ROBO SOCCER": { members: "2-4", amount: 300 },
     "PROJECT COMPETITION": { members: "2-4", amount: 400 },
-    "REVERSE CODING": { members: "2", amount: 250 },
-    "CAD COMP": { members: "1", amount: 150 },
-    "PAPERWEIGHT": { members: "2-4", amount: 200 },
+    "REVERSE CODING": { members: "2", amount: 150 },
+    "CAD COMP": { members: "1", amount: 100 },
+    "PAPERWEIGHT": { members: "1-2", amount: 150 },
   };
 
   const [formData, setFormData] = useState({
@@ -86,7 +86,7 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
       console.error(err);
       setMessage("SYSTEM FAILURE: CONNECTION REFUSED (API MOCK)");
       // Remove the line below in production
-      setTimeout(onClose, 2000); 
+      setTimeout(onClose, 2000);
     } finally {
       setIsSubmitting(false);
     }
@@ -99,7 +99,7 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
       ? `upi://pay?pa=${upiId}&pn=TechFest+Avalon&am=${amount}&cu=INR`
       : null;
 
-      
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -118,7 +118,7 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
             >
-              
+
               {/* FIXED: STICKY HEADER ensures Close button is always visible */}
               <div className="sticky top-0 z-50 bg-black/95 border-b border-yellow-400/30 px-6 py-4 flex justify-between items-center backdrop-blur">
                 <h2 className="text-xl sm:text-2xl font-bold text-yellow-400 font-vt323 tracking-wider glitch-text">
@@ -134,7 +134,7 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
 
               <div className="p-6 md:p-8">
                 <form onSubmit={handleSubmit} className="space-y-5 font-mono text-sm sm:text-base">
-                  
+
                   {/* Team & Leader */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
@@ -263,18 +263,17 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
 
                   {/* Transaction Proof Upload - COMPULSORY */}
                   <div className="flex flex-col gap-2">
-                     <label className="text-xs text-yellow-400 font-bold uppercase">
-                        Proof of Transaction (Required) *
-                     </label>
-                    <div 
-                      className={`border-2 border-dashed p-6 text-center cursor-pointer transition-colors ${
-                        formData.screenshot ? 'border-green-500 bg-green-500/10' : 'border-white/20 hover:border-yellow-400'
-                      }`}
+                    <label className="text-xs text-yellow-400 font-bold uppercase">
+                      Proof of Transaction (Required) *
+                    </label>
+                    <div
+                      className={`border-2 border-dashed p-6 text-center cursor-pointer transition-colors ${formData.screenshot ? 'border-green-500 bg-green-500/10' : 'border-white/20 hover:border-yellow-400'
+                        }`}
                     >
                       <label className="block w-full h-full cursor-pointer">
                         <span className={formData.screenshot ? "text-green-400 font-bold" : "text-gray-400"}>
-                          {formData.screenshot 
-                            ? `[FILE ACQUIRED]: ${formData.screenshot.name}` 
+                          {formData.screenshot
+                            ? `[FILE ACQUIRED]: ${formData.screenshot.name}`
                             : "[CLICK TO UPLOAD PAYMENT SCREENSHOT]"}
                         </span>
                         <input
@@ -293,11 +292,10 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full py-4 font-bold tracking-widest uppercase transition-all border border-transparent ${
-                      isSubmitting
+                    className={`w-full py-4 font-bold tracking-widest uppercase transition-all border border-transparent ${isSubmitting
                         ? "bg-gray-800 text-gray-500 cursor-not-allowed"
                         : "bg-yellow-400 text-black hover:bg-yellow-300 hover:scale-[1.01] active:scale-[0.99] shadow-[0_0_20px_rgba(250,204,21,0.4)]"
-                    }`}
+                      }`}
                   >
                     {isSubmitting ? "TRANSMITTING DATA..." : "CONFIRM REGISTRATION"}
                   </button>
@@ -307,11 +305,10 @@ export default function RegistrationModal({ isOpen, onClose, defaultEvent = "" }
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className={`p-3 text-center font-bold border ${
-                        message.includes("ERROR") || message.includes("FAILURE")
+                      className={`p-3 text-center font-bold border ${message.includes("ERROR") || message.includes("FAILURE")
                           ? "border-red-500 bg-red-500/10 text-red-500"
                           : "border-green-500 bg-green-500/10 text-green-400"
-                      }`}
+                        }`}
                     >
                       {message}
                     </motion.div>

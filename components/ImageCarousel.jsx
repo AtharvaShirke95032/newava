@@ -37,6 +37,7 @@ const EVENTS = [
     image: "/second.png",
     date: "9 FEB 2026",
     prize: "₹16,000",
+    rulebook: "/robo-soccer-rulebook.pdf",
     content: (
       <>
         <p className="font-semibold text-yellow-400 text-lg">
@@ -48,6 +49,17 @@ const EVENTS = [
         <p className="mt-2 text-sm text-gray-400">
           Registration: ₹300 per team
         </p>
+        <a
+          href="/robo-soccer-rulebook.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-yellow-400 text-yellow-400 text-sm font-bold uppercase tracking-wider hover:bg-yellow-400 hover:text-black transition-colors duration-300"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18 18.247 18.477 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          Read Rulebook
+        </a>
       </>
     ),
   },
@@ -77,6 +89,7 @@ const EVENTS = [
     image: "/brum.png",
     date: "9 FEB 2026",
     prize: "₹16,000",
+    rulebook: "/robo-race-rulebook.pdf",
     content: (
       <>
         <p className="font-semibold text-yellow-400 text-lg">
@@ -88,6 +101,17 @@ const EVENTS = [
         <p className="mt-2 text-sm text-gray-400">
           Registration: ₹400 per team (2-4 members)
         </p>
+        <a
+          href="/robo-race-rulebook.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-yellow-400 text-yellow-400 text-sm font-bold uppercase tracking-wider hover:bg-yellow-400 hover:text-black transition-colors duration-300"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18 18.247 18.477 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+          Read Rulebook
+        </a>
       </>
     ),
   },
