@@ -99,7 +99,7 @@ const EVENTS = [
           A thrilling robotics competition testing speed, precision, and control on a challenging track.
         </p>
         <p className="mt-2 text-sm text-gray-400">
-          Registration: ₹400 per team (2-4 members)
+          Registration: ₹150 per team (Individual)
         </p>
         <a
           href="/robo-race-rulebook.pdf"
